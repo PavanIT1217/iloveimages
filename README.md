@@ -1,20 +1,17 @@
-# iLoveImages
+# iLoveImages Forge
 
-Resize and compress one image into many sizes at once, with a live preview of each. Everything runs in the browser, so images are never uploaded anywhere.
+Crop and edit one image, and watch it update live on many screen sizes at once. Everything runs in the browser: there's no backend, and images never leave your device.
 
-- **Format:** JPEG, WebP, PNG, plus AVIF in browsers that can encode it
-- **Compression:** set a quality, or set a max file size and the app searches for the best quality that fits (it can also shrink the dimensions if needed)
-- **Fit modes:** fill/crop, fit inside, pad, stretch; never-upscale option
-- **Sizes:** desktop, laptop, tablet and mobile viewports, social sizes, web sizes, plus your own custom sizes
-- Download each size on its own, or all of them as a `.zip`
+- **Editor:** a crop box you can drag, with aspect-ratio lock (free, original, 1:1, 4:5, 4:3, 3:2, 16:9, 9:16), rotate, flip, and a straighten slider that zooms in automatically to hide empty corners
+- **Adjust:** brightness, contrast, saturation, hue, mono, sepia, blur and vignette, plus one-click looks
+- **Output:** JPEG, WebP or PNG (AVIF where the browser supports it), set by quality or by a max file size. Fit modes: fill, fit, pad, stretch
+- **Live viewports:** desktop, laptop, tablet, phone, social and custom sizes, each in a device frame. They redraw instantly while you edit. Once you pause, each one is encoded at full resolution, showing the real file size and how much smaller it is than the original
+- Download each size, or all of them as a `.zip`. Click any screen to inspect it full size.
 
 ## Run locally
 
-It's a static site with no build step:
-
 ```sh
-python3 -m http.server 8000
-# open http://localhost:8000
+python3 -m http.server 8000   # then open http://localhost:8000
 ```
 
-It can be deployed as-is to GitHub Pages, Netlify, Vercel, etc.
+It's a static site, so it can be deployed as-is to GitHub Pages, Netlify, Vercel, etc.

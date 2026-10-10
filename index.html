@@ -3,114 +3,181 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>iLoveImages Resizer</title>
-  <meta name="description" content="Resize and compress images for many sizes at once, entirely in your browser.">
+  <title>iLoveImages Forge</title>
+  <meta name="description" content="Crop, edit and export an image to every screen size at once, live, entirely in your browser.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">iLove<span>Images</span></div>
-    <p class="tagline">Resize &amp; compress for every size at once. Your images never leave your device.</p>
-  </header>
-
-  <main class="layout">
-    <!-- Sidebar: source + export settings + presets -->
-    <aside class="sidebar">
-      <section class="panel" id="source-panel">
-        <h2>Image</h2>
-        <label class="dropzone" id="dropzone">
-          <input type="file" id="file-input" accept="image/*" hidden>
-          <img id="source-preview" alt="" hidden>
-          <span class="dz-text" id="dz-text"><strong>Drop, paste or click</strong><br>to choose an image</span>
-        </label>
-        <dl class="meta" id="source-meta" hidden>
-          <dt>File</dt><dd id="src-name"></dd>
-          <dt>Dimensions</dt><dd id="src-dims"></dd>
-          <dt>Size</dt><dd id="src-size"></dd>
-        </dl>
-        <button type="button" class="link-btn" id="sample-btn">Try a sample image</button>
-      </section>
-
-      <section class="panel">
-        <h2>Export</h2>
-        <div class="field">
-          <span class="label">Format</span>
-          <div class="seg" id="format-seg" role="radiogroup" aria-label="Format"></div>
+  <div class="app">
+    <!-- ============ HUD top bar ============ -->
+    <header class="hud">
+      <div class="logo">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 29 9.5v13L16 30 3 22.5v-13z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 21l5-6.5 3.5 4 2.5-2.5 3 5z" fill="currentColor"/><circle cx="20.5" cy="11.5" r="2" fill="currentColor"/></svg>
+        <div>
+          <div class="logo-name">ILOVE<span>IMAGES</span></div>
+          <div class="logo-sub">IMAGE FORGE · CLIENT-SIDE</div>
         </div>
+      </div>
+      <dl class="readouts">
+        <div><dt>SRC</dt><dd id="ro-src">—</dd></div>
+        <div><dt>CROP</dt><dd id="ro-crop">—</dd></div>
+        <div><dt>OUT</dt><dd id="ro-out">—</dd></div>
+        <div><dt>STATUS</dt><dd><span class="led" id="status-led"></span><span id="ro-status">STANDBY</span></dd></div>
+      </dl>
+      <div class="hud-actions">
+        <label class="btn ghost" for="file-input">Load image</label>
+        <input type="file" id="file-input" accept="image/*" hidden>
+        <button type="button" class="btn primary" id="download-all" disabled>Export all</button>
+      </div>
+    </header>
 
-        <div class="field">
-          <span class="label">Compression</span>
-          <div class="seg" role="radiogroup" aria-label="Compression mode">
-            <button type="button" data-mode="quality" class="seg-btn">Quality</button>
-            <button type="button" data-mode="target" class="seg-btn">Target size</button>
-          </div>
+    <!-- ============ Left rail: editing tools ============ -->
+    <aside class="rail rail-left module" aria-label="Editing tools">
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" data-tab="t-crop" aria-selected="true"><i>01</i>Crop &amp; transform</button>
+        <button type="button" role="tab" data-tab="t-adjust" aria-selected="false"><i>02</i>Adjust</button>
+      </div>
+
+      <div class="tab-panel" id="t-crop" role="tabpanel">
+        <span class="field-label">Aspect ratio</span>
+        <div class="chips" id="aspect-chips">
+          <button type="button" data-aspect="free">Free</button>
+          <button type="button" data-aspect="orig">Orig</button>
+          <button type="button" data-aspect="1">1:1</button>
+          <button type="button" data-aspect="0.8">4:5</button>
+          <button type="button" data-aspect="1.3333">4:3</button>
+          <button type="button" data-aspect="1.5">3:2</button>
+          <button type="button" data-aspect="1.7778">16:9</button>
+          <button type="button" data-aspect="0.5625">9:16</button>
         </div>
-
-        <div class="field" id="quality-field">
-          <label class="label" for="quality">Quality <output id="quality-out"></output></label>
-          <input type="range" id="quality" min="5" max="100" step="1">
-          <div class="range-hints"><span>Smaller file</span><span>Better quality</span></div>
+        <span class="field-label">Rotate &amp; flip</span>
+        <div class="tool-row">
+          <button type="button" class="icon-btn" id="rot-left" title="Rotate left" aria-label="Rotate left">
+            <svg viewBox="0 0 24 24"><path d="M4 4v6h6M4.5 10A8 8 0 1 1 6 16.5"/></svg></button>
+          <button type="button" class="icon-btn" id="rot-right" title="Rotate right" aria-label="Rotate right">
+            <svg viewBox="0 0 24 24"><path d="M20 4v6h-6M19.5 10A8 8 0 1 0 18 16.5"/></svg></button>
+          <button type="button" class="icon-btn" id="flip-h" title="Flip horizontal" aria-label="Flip horizontal">
+            <svg viewBox="0 0 24 24"><path d="M12 3v18M9 7 4 17h5zM15 7l5 10h-5z"/></svg></button>
+          <button type="button" class="icon-btn" id="flip-v" title="Flip vertical" aria-label="Flip vertical">
+            <svg viewBox="0 0 24 24"><path d="M3 12h18M7 9 17 4v5zM7 15l10 5v-5z"/></svg></button>
         </div>
-
-        <div class="field" id="target-field" hidden>
-          <label class="label" for="target-kb">Max file size per image</label>
-          <div class="input-unit">
-            <input type="number" id="target-kb" min="5" step="5" inputmode="numeric">
-            <span>KB</span>
-          </div>
-          <label class="check"><input type="checkbox" id="allow-downscale"> Shrink dimensions if needed</label>
+        <div class="slider" data-key="straighten">
+          <label>Straighten <output></output></label>
+          <input type="range" min="-45" max="45" step="0.5" value="0">
         </div>
+        <button type="button" class="btn small wide" id="crop-reset">Reset crop &amp; transform</button>
+      </div>
 
-        <p class="note" id="png-note" hidden>PNG is lossless, so the quality setting has no effect. Choose JPEG or WebP for smaller files.</p>
-
-        <div class="field">
-          <label class="label" for="fit">Fit</label>
-          <select id="fit">
-            <option value="cover">Fill: crop to exact size</option>
-            <option value="contain">Fit inside: keep ratio, no crop</option>
-            <option value="pad">Pad: exact size with background</option>
-            <option value="stretch">Stretch: exact size, distort</option>
-          </select>
-        </div>
-
-        <div class="field row">
-          <label class="label" for="bg">Background</label>
-          <input type="color" id="bg">
-          <label class="check"><input type="checkbox" id="transparent"> Transparent</label>
-        </div>
-
-        <label class="check"><input type="checkbox" id="no-upscale"> Never upscale beyond source</label>
-      </section>
-
-      <section class="panel">
-        <h2>Sizes</h2>
-        <div id="preset-groups"></div>
-        <form class="custom-form" id="custom-form">
-          <input type="text" id="custom-name" placeholder="Name" maxlength="24" aria-label="Custom size name">
-          <input type="number" id="custom-w" placeholder="W" min="1" max="10000" required aria-label="Width">
-          <span>×</span>
-          <input type="number" id="custom-h" placeholder="H" min="1" max="10000" required aria-label="Height">
-          <button type="submit" class="btn small">Add</button>
-        </form>
-      </section>
+      <div class="tab-panel" id="t-adjust" role="tabpanel" hidden>
+        <span class="field-label">Looks</span>
+        <div class="chips" id="look-chips"></div>
+        <p class="note" id="filter-note" hidden>Your browser can't apply colour filters on canvas. Vignette still works.</p>
+        <div id="adjust-sliders"></div>
+        <button type="button" class="btn small wide" id="adjust-reset">Reset adjustments</button>
+      </div>
     </aside>
 
-    <!-- Results: one live card per enabled size -->
-    <section class="results">
-      <div class="results-bar">
-        <div id="summary" class="summary">Choose an image to see live previews.</div>
-        <button type="button" class="btn primary" id="download-all" disabled>Download all (.zip)</button>
+    <!-- ============ Stage: the editable image ============ -->
+    <main class="stage" id="stage">
+      <div class="stage-hud tl" id="stage-tl">EDITOR</div>
+      <div class="stage-hud tr" id="stage-tr"></div>
+      <div class="stage-hud bl" id="stage-bl"></div>
+      <div class="stage-hud br"><button type="button" class="link" id="reset-all" hidden>Reset all edits</button></div>
+      <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+
+      <div class="canvas-box" id="canvas-box" hidden>
+        <canvas id="stage-canvas"></canvas>
+        <div class="crop-layer" id="crop-layer">
+          <div class="crop-box" id="crop-box">
+            <div class="thirds"></div>
+            <span class="h" data-h="nw"></span><span class="h" data-h="n"></span><span class="h" data-h="ne"></span>
+            <span class="h" data-h="e"></span><span class="h" data-h="se"></span><span class="h" data-h="s"></span>
+            <span class="h" data-h="sw"></span><span class="h" data-h="w"></span>
+            <span class="crop-tag" id="crop-tag"></span>
+          </div>
+        </div>
       </div>
-      <div class="grid" id="grid"></div>
+
+      <label class="intake" id="intake" for="file-input">
+        <span class="rings"><i></i><i></i><i></i></span>
+        <span class="intake-title">Awaiting input</span>
+        <span class="intake-sub">Drop, paste or click to load an image</span>
+        <button type="button" class="btn small" id="sample-btn">Load sample</button>
+      </label>
+    </main>
+
+    <!-- ============ Right rail: output settings ============ -->
+    <aside class="rail rail-right module" aria-label="Export settings">
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" data-tab="t-output" aria-selected="true"><i>03</i>Output</button>
+        <button type="button" role="tab" data-tab="t-vps" aria-selected="false"><i>04</i>Viewports</button>
+      </div>
+
+      <div class="tab-panel" id="t-output" role="tabpanel">
+        <span class="field-label">Format</span>
+        <div class="seg" id="format-seg" role="radiogroup" aria-label="Format"></div>
+
+        <span class="field-label">Compression</span>
+        <div class="seg" role="radiogroup" aria-label="Compression mode">
+          <button type="button" data-mode="quality" role="radio">Quality</button>
+          <button type="button" data-mode="target" role="radio">Target size</button>
+        </div>
+
+        <div class="slider" id="quality-field">
+          <label>Quality <output id="quality-out"></output></label>
+          <input type="range" id="quality" min="5" max="100" step="1">
+        </div>
+        <p class="note" id="png-note" hidden>PNG is lossless. Quality has no effect.</p>
+
+        <div id="target-field" hidden>
+          <label class="field-label" for="target-kb">Max size per file</label>
+          <div class="unit-input"><input type="number" id="target-kb" min="5" step="5" inputmode="numeric"><span>KB</span></div>
+          <label class="check"><input type="checkbox" id="allow-downscale"><span></span>Shrink dimensions if needed</label>
+        </div>
+
+        <label class="field-label" for="fit">Fit to viewport</label>
+        <select id="fit">
+          <option value="cover">Fill: crop to exact size</option>
+          <option value="contain">Fit inside: keep ratio</option>
+          <option value="pad">Pad: exact size + background</option>
+          <option value="stretch">Stretch: exact size</option>
+        </select>
+
+        <div class="bg-row">
+          <span class="field-label">Background</span>
+          <input type="color" id="bg" aria-label="Background colour">
+          <label class="check"><input type="checkbox" id="transparent"><span></span>Transparent</label>
+        </div>
+        <label class="check"><input type="checkbox" id="no-upscale"><span></span>Never upscale beyond source</label>
+      </div>
+
+      <div class="tab-panel" id="t-vps" role="tabpanel" hidden>
+        <div id="vp-toggles"></div>
+        <form class="custom-form" id="custom-form">
+          <input type="text" id="custom-name" placeholder="Name" maxlength="20" aria-label="Viewport name">
+          <input type="number" id="custom-w" placeholder="W" min="1" max="10000" required aria-label="Width">
+          <input type="number" id="custom-h" placeholder="H" min="1" max="10000" required aria-label="Height">
+          <button type="submit" class="btn small" aria-label="Add viewport">+</button>
+        </form>
+      </div>
+    </aside>
+
+    <!-- ============ Viewport deck: live outputs ============ -->
+    <section class="deck" aria-label="Live viewport previews">
+      <div class="deck-head">
+        <h2><i>05</i>Live viewports</h2>
+        <span class="deck-sub" id="deck-sub">Screens redraw as you edit · encoded size locks in when you pause · click a screen to inspect at 100%</span>
+      </div>
+      <div class="deck-track" id="deck"></div>
     </section>
-  </main>
+  </div>
 
   <dialog id="lightbox">
-    <div class="lb-head">
-      <span id="lb-title"></span>
-      <button type="button" class="btn small" id="lb-close">Close</button>
-    </div>
+    <div class="lb-head"><span id="lb-title"></span><button type="button" class="btn small" id="lb-close">Close</button></div>
     <div class="lb-body checker"><img id="lb-img" alt=""></div>
   </dialog>
 
