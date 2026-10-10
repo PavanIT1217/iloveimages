@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iLoveImages Resizer</title>
+  <meta name="description" content="Resize and compress images for many sizes at once, entirely in your browser.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">iLove<span>Images</span></div>
+    <p class="tagline">Resize &amp; compress for every size at once. Your images never leave your device.</p>
+  </header>
+
+  <main class="layout">
+    <!-- Sidebar: source + export settings + presets -->
+    <aside class="sidebar">
+      <section class="panel" id="source-panel">
+        <h2>Image</h2>
+        <label class="dropzone" id="dropzone">
+          <input type="file" id="file-input" accept="image/*" hidden>
+          <img id="source-preview" alt="" hidden>
+          <span class="dz-text" id="dz-text"><strong>Drop, paste or click</strong><br>to choose an image</span>
+        </label>
+        <dl class="meta" id="source-meta" hidden>
+          <dt>File</dt><dd id="src-name"></dd>
+          <dt>Dimensions</dt><dd id="src-dims"></dd>
+          <dt>Size</dt><dd id="src-size"></dd>
+        </dl>
+        <button type="button" class="link-btn" id="sample-btn">Try a sample image</button>
+      </section>
+
+      <section class="panel">
+        <h2>Export</h2>
+        <div class="field">
+          <span class="label">Format</span>
+          <div class="seg" id="format-seg" role="radiogroup" aria-label="Format"></div>
+        </div>
+
+        <div class="field">
+          <span class="label">Compression</span>
+          <div class="seg" role="radiogroup" aria-label="Compression mode">
+            <button type="button" data-mode="quality" class="seg-btn">Quality</button>
+            <button type="button" data-mode="target" class="seg-btn">Target size</button>
+          </div>
+        </div>
+
+        <div class="field" id="quality-field">
+          <label class="label" for="quality">Quality <output id="quality-out"></output></label>
+          <input type="range" id="quality" min="5" max="100" step="1">
+          <div class="range-hints"><span>Smaller file</span><span>Better quality</span></div>
+        </div>
+
+        <div class="field" id="target-field" hidden>
+          <label class="label" for="target-kb">Max file size per image</label>
+          <div class="input-unit">
+            <input type="number" id="target-kb" min="5" step="5" inputmode="numeric">
+            <span>KB</span>
+          </div>
+          <label class="check"><input type="checkbox" id="allow-downscale"> Shrink dimensions if needed</label>
+        </div>
+
+        <p class="note" id="png-note" hidden>PNG is lossless, so the quality setting has no effect. Choose JPEG or WebP for smaller files.</p>
+
+        <div class="field">
+          <label class="label" for="fit">Fit</label>
+          <select id="fit">
+            <option value="cover">Fill: crop to exact size</option>
+            <option value="contain">Fit inside: keep ratio, no crop</option>
+            <option value="pad">Pad: exact size with background</option>
+            <option value="stretch">Stretch: exact size, distort</option>
+          </select>
+        </div>
+
+        <div class="field row">
+          <label class="label" for="bg">Background</label>
+          <input type="color" id="bg">
+          <label class="check"><input type="checkbox" id="transparent"> Transparent</label>
+        </div>
+
+        <label class="check"><input type="checkbox" id="no-upscale"> Never upscale beyond source</label>
+      </section>
+
+      <section class="panel">
+        <h2>Sizes</h2>
+        <div id="preset-groups"></div>
+        <form class="custom-form" id="custom-form">
+          <input type="text" id="custom-name" placeholder="Name" maxlength="24" aria-label="Custom size name">
+          <input type="number" id="custom-w" placeholder="W" min="1" max="10000" required aria-label="Width">
+          <span>×</span>
+          <input type="number" id="custom-h" placeholder="H" min="1" max="10000" required aria-label="Height">
+          <button type="submit" class="btn small">Add</button>
+        </form>
+      </section>
+    </aside>
+
+    <!-- Results: one live card per enabled size -->
+    <section class="results">
+      <div class="results-bar">
+        <div id="summary" class="summary">Choose an image to see live previews.</div>
+        <button type="button" class="btn primary" id="download-all" disabled>Download all (.zip)</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+  </main>
+
+  <dialog id="lightbox">
+    <div class="lb-head">
+      <span id="lb-title"></span>
+      <button type="button" class="btn small" id="lb-close">Close</button>
+    </div>
+    <div class="lb-body checker"><img id="lb-img" alt=""></div>
+  </dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
