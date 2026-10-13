@@ -3,25 +3,170 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>iLoveImages Forge</title>
-  <meta name="description" content="Crop, edit and export an image to every screen size at once, live, entirely in your browser.">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Free Image Resizer, Cropper &amp; Compressor Online | iLoveImages</title>
+  <meta name="description" content="Resize, crop and compress images for desktop, mobile, Instagram, YouTube and more in one go. Free, fast and private: everything runs in your browser.">
+  <link rel="canonical" href="https://iloveimages.webappslab.com/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#03060c">
+  <meta name="color-scheme" content="dark">
+  <meta name="application-name" content="iLoveImages">
+  <meta name="apple-mobile-web-app-title" content="iLoveImages">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Icons & PWA manifest -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Open Graph / social previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="iLoveImages">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://iloveimages.webappslab.com/">
+  <meta property="og:title" content="Free Image Resizer, Cropper &amp; Compressor Online | iLoveImages">
+  <meta property="og:description" content="Resize, crop and compress images for desktop, mobile, Instagram, YouTube and more in one go. Free, fast and private: everything runs in your browser.">
+  <meta property="og:image" content="https://iloveimages.webappslab.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="iLoveImages editor showing one image cropped and resized live for desktop, tablet, phone and social media">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Image Resizer, Cropper &amp; Compressor Online | iLoveImages">
+  <meta name="twitter:description" content="Resize, crop and compress images for desktop, mobile, Instagram, YouTube and more in one go. Free, fast and private: everything runs in your browser.">
+  <meta name="twitter:image" content="https://iloveimages.webappslab.com/og-image.png">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://iloveimages.webappslab.com/#app",
+      "name": "iLoveImages: image resizer, cropper and compressor",
+      "url": "https://iloveimages.webappslab.com/",
+      "description": "Resize, crop and compress images for desktop, mobile, Instagram, YouTube and more in one go. Free, fast and private: everything runs in your browser.",
+      "applicationCategory": "MultimediaApplication",
+      "applicationSubCategory": "Image editor",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript and a modern web browser",
+      "isAccessibleForFree": true,
+      "inLanguage": "en",
+      "image": "https://iloveimages.webappslab.com/og-image.png",
+      "screenshot": "https://iloveimages.webappslab.com/og-image.png",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Crop with aspect-ratio lock",
+        "Rotate, flip and straighten",
+        "Brightness, contrast, saturation, hue and filters",
+        "Resize to many screen and social media sizes at once",
+        "Compress to a target file size in KB",
+        "Export JPEG, WebP, PNG and AVIF",
+        "Batch download as ZIP",
+        "Runs locally in the browser, no uploads"
+      ],
+      "publisher": {
+        "@id": "https://iloveimages.webappslab.com/#org"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://iloveimages.webappslab.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is iLoveImages free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every feature is free with no sign-up, no watermark and no limit on the number of images."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my images uploaded to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Cropping, editing, resizing and compression all happen on your device using your browser. Your photos never leave your computer or phone, so the tool is private and works even on slow connections once the page has loaded."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which image formats are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can open JPG, PNG, WebP, GIF, BMP, AVIF and HEIC (where your browser supports it). You can export to JPEG, WebP and PNG, and to AVIF in browsers that can encode it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I make an image smaller in KB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Switch Compression to \"Target size\" and enter the maximum file size in KB. The tool finds the highest quality that fits under your limit for every size, and can shrink the dimensions if quality alone is not enough."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I resize one image to many sizes at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Turn on any built-in viewports (desktop, tablet, mobile, Instagram, YouTube and more) or add your own width and height, then download each file or all of them as a ZIP."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will resizing reduce image quality?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Downscaling uses multi-step, high-quality resampling to keep edges sharp, and the \"Never upscale\" option stops small images from being stretched and blurred. You can inspect every output at 100% before downloading."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://iloveimages.webappslab.com/#org",
+      "name": "iLoveImages",
+      "url": "https://iloveimages.webappslab.com/",
+      "logo": "https://iloveimages.webappslab.com/icon-512.png"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://iloveimages.webappslab.com/#website",
+      "name": "iLoveImages",
+      "url": "https://iloveimages.webappslab.com/",
+      "description": "Resize, crop and compress images for desktop, mobile, Instagram, YouTube and more in one go. Free, fast and private: everything runs in your browser.",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://iloveimages.webappslab.com/#org"
+      }
+    }
+  ]
+}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Fonts load without blocking first paint -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;800&display=swap"></noscript>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <div class="app">
     <!-- ============ HUD top bar ============ -->
     <header class="hud">
-      <div class="logo">
+      <a class="logo" href="/" aria-label="iLoveImages home">
         <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 29 9.5v13L16 30 3 22.5v-13z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 21l5-6.5 3.5 4 2.5-2.5 3 5z" fill="currentColor"/><circle cx="20.5" cy="11.5" r="2" fill="currentColor"/></svg>
         <div>
           <div class="logo-name">ILOVE<span>IMAGES</span></div>
-          <div class="logo-sub">IMAGE FORGE · CLIENT-SIDE</div>
+          <h1 class="logo-sub">Free image resizer, cropper &amp; compressor</h1>
         </div>
-      </div>
+      </a>
       <dl class="readouts">
         <div><dt>SRC</dt><dd id="ro-src">—</dd></div>
         <div><dt>CROP</dt><dd id="ro-crop">—</dd></div>
@@ -29,6 +174,7 @@
         <div><dt>STATUS</dt><dd><span class="led" id="status-led"></span><span id="ro-status">STANDBY</span></dd></div>
       </dl>
       <div class="hud-actions">
+        <a class="btn ghost" href="#guide" id="guide-toggle" aria-controls="guide">Guide</a>
         <label class="btn ghost" for="file-input">Load image</label>
         <input type="file" id="file-input" accept="image/*" hidden>
         <button type="button" class="btn primary" id="download-all" disabled>Export all</button>
@@ -67,7 +213,7 @@
         </div>
         <div class="slider" data-key="straighten">
           <label>Straighten <output></output></label>
-          <input type="range" min="-45" max="45" step="0.5" value="0">
+          <input type="range" min="-45" max="45" step="0.5" value="0" aria-label="Straighten angle in degrees">
         </div>
         <button type="button" class="btn small wide" id="crop-reset">Reset crop &amp; transform</button>
       </div>
@@ -129,7 +275,7 @@
 
         <div class="slider" id="quality-field">
           <label>Quality <output id="quality-out"></output></label>
-          <input type="range" id="quality" min="5" max="100" step="1">
+          <input type="range" id="quality" min="5" max="100" step="1" aria-label="Output quality">
         </div>
         <p class="note" id="png-note" hidden>PNG is lossless. Quality has no effect.</p>
 
@@ -176,11 +322,107 @@
     </section>
   </div>
 
+  <!-- ============ Guide: indexable help content ============ -->
+  <section class="guide" id="guide" aria-labelledby="guide-title">
+    <div class="guide-head">
+      <span class="guide-kicker"><i>//</i>Guide</span>
+      <button type="button" class="btn small" id="guide-close">Close</button>
+    </div>
+    <article>
+      
+      <h2 id="guide-title">Free image resizer, cropper &amp; compressor: free, private and in your browser</h2>
+      <p>iLoveImages is a free online photo editor that turns one picture into every size you need. Crop, rotate, straighten and colour-correct your image, then watch it update live on desktop, laptop, tablet, phone and social media sizes at the same time.</p>
+      <p>Pick JPEG, WebP or PNG, set a quality or a maximum file size in KB, and download each version or all of them as a ZIP. Nothing is uploaded: your images are processed privately on your own device.</p>
+
+      <h2>How to resize, crop and compress an image</h2>
+      <ol>
+        <li>Drop, paste or choose an image (or try the sample).</li>
+        <li>Crop it with a free or locked aspect ratio, then rotate, flip or straighten it.</li>
+        <li>Adjust brightness, contrast, saturation and more, or apply a one-click look.</li>
+        <li>Choose the output format and a quality or target file size.</li>
+        <li>Check every live viewport, then download one size or export them all as a ZIP.</li>
+      </ol>
+
+      <h2>Features</h2>
+      <ul>
+        <li><strong>Live multi-size preview:</strong> every viewport redraws as you crop and edit, then shows the real encoded file size.</li>
+        <li><strong>Crop &amp; transform:</strong> aspect-ratio lock, rotate, flip and straighten.</li>
+        <li><strong>Adjust:</strong> brightness, contrast, saturation, hue, mono, sepia, blur, vignette and one-click looks.</li>
+        <li><strong>Compression:</strong> pick a quality, or a maximum size in KB and let the tool find the best quality.</li>
+        <li><strong>Formats:</strong> JPEG, WebP, PNG and AVIF (where supported), with transparent backgrounds.</li>
+        <li><strong>Private:</strong> no uploads, no account, no watermark.</li>
+      </ul>
+
+      <h2>Built-in image sizes</h2>
+      <table>
+        <thead><tr><th scope="col">Viewport</th><th scope="col">Pixels</th><th scope="col">Best for</th></tr></thead>
+        <tbody>
+          <tr><td>Desktop</td><td>1920 × 1080</td><td>Full HD screens, hero banners, wallpapers</td></tr>
+          <tr><td>Laptop</td><td>1366 × 768</td><td>Common laptop screens</td></tr>
+          <tr><td>Tablet</td><td>768 × 1024</td><td>iPad and tablets in portrait</td></tr>
+          <tr><td>Mobile</td><td>390 × 844</td><td>Modern phone screens</td></tr>
+          <tr><td>Instagram post</td><td>1080 × 1080</td><td>Square feed posts (1:1)</td></tr>
+          <tr><td>Instagram portrait</td><td>1080 × 1350</td><td>Portrait feed posts (4:5)</td></tr>
+          <tr><td>Story / Reel</td><td>1080 × 1920</td><td>Instagram, Facebook and WhatsApp stories, Reels, Shorts, TikTok (9:16)</td></tr>
+          <tr><td>Link preview</td><td>1200 × 630</td><td>Open Graph images for Facebook, LinkedIn, X and Slack</td></tr>
+          <tr><td>YouTube thumbnail</td><td>1280 × 720</td><td>Video thumbnails (16:9)</td></tr>
+          <tr><td>Thumbnail</td><td>300 × 300</td><td>Product grids and avatars</td></tr>
+          <tr><td>App icon</td><td>512 × 512</td><td>PWA and store icons</td></tr>
+        </tbody>
+      </table>
+      <p>Need something else? Add any custom width and height in the Viewports tab.</p>
+
+      <h2>Frequently asked questions</h2>
+      <details>
+        <summary>Is iLoveImages free?</summary>
+        <p>Yes. Every feature is free with no sign-up, no watermark and no limit on the number of images.</p>
+      </details>
+      <details>
+        <summary>Are my images uploaded to a server?</summary>
+        <p>No. Cropping, editing, resizing and compression all happen on your device using your browser. Your photos never leave your computer or phone, so the tool is private and works even on slow connections once the page has loaded.</p>
+      </details>
+      <details>
+        <summary>Which image formats are supported?</summary>
+        <p>You can open JPG, PNG, WebP, GIF, BMP, AVIF and HEIC (where your browser supports it). You can export to JPEG, WebP and PNG, and to AVIF in browsers that can encode it.</p>
+      </details>
+      <details>
+        <summary>How do I make an image smaller in KB?</summary>
+        <p>Switch Compression to &quot;Target size&quot; and enter the maximum file size in KB. The tool finds the highest quality that fits under your limit for every size, and can shrink the dimensions if quality alone is not enough.</p>
+      </details>
+      <details>
+        <summary>Can I resize one image to many sizes at once?</summary>
+        <p>Yes. Turn on any built-in viewports (desktop, tablet, mobile, Instagram, YouTube and more) or add your own width and height, then download each file or all of them as a ZIP.</p>
+      </details>
+      <details>
+        <summary>Will resizing reduce image quality?</summary>
+        <p>Downscaling uses multi-step, high-quality resampling to keep edges sharp, and the &quot;Never upscale&quot; option stops small images from being stretched and blurred. You can inspect every output at 100% before downloading.</p>
+      </details>
+
+      <h2>More free image tools</h2>
+      <nav aria-label="Image tools">
+        <ul class="tool-links">
+          <li><a href="/resize-image-for-instagram/">Resize image for Instagram</a></li>
+          <li><a href="/resize-image-for-youtube-thumbnail/">YouTube thumbnail resizer</a></li>
+          <li><a href="/compress-image-to-100kb/">Compress image to 100 KB</a></li>
+          <li><a href="/compress-image-to-50kb/">Compress image to 50 KB</a></li>
+          <li><a href="/crop-image/">Crop image online</a></li>
+          <li><a href="/convert-image-to-webp/">Convert image to WebP</a></li>
+          <li><a href="/responsive-image-generator/">Responsive image generator</a></li>
+        </ul>
+      </nav>
+    </article>
+    <footer class="guide-foot">© 2026 iLoveImages · Images are processed on your device and never uploaded.</footer>
+  </section>
+
+  <noscript>
+    <p class="noscript">iLoveImages runs entirely in your browser and needs JavaScript to resize, crop and compress images. Please enable JavaScript and reload the page.</p>
+  </noscript>
+
   <dialog id="lightbox">
     <div class="lb-head"><span id="lb-title"></span><button type="button" class="btn small" id="lb-close">Close</button></div>
     <div class="lb-body checker"><img id="lb-img" alt=""></div>
   </dialog>
 
-  <script type="module" src="app.js"></script>
+  <script type="module" src="/app.js"></script>
 </body>
 </html>

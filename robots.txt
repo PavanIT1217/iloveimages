@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /src/
+Disallow: /scripts/
+
+Sitemap: https://iloveimages.webappslab.com/sitemap.xml

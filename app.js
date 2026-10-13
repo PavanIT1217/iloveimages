@@ -79,8 +79,16 @@ function loadOut() {
   try { return { ...outDefaults, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') }; }
   catch { return { ...outDefaults }; }
 }
+// Landing pages pass a starting setup via <body data-config> (see scripts/build.mjs).
+const pageConfig = (() => {
+  try { return JSON.parse(document.body.dataset.config || '{}'); } catch { return {}; }
+})();
+
 const out = loadOut();
-const enabled = new Set(out.enabled);
+for (const key of ['format', 'mode', 'quality', 'targetKB', 'allowDownscale', 'fit']) {
+  if (key in pageConfig) out[key] = pageConfig[key];
+}
+const enabled = new Set(pageConfig.enabled || out.enabled);
 function saveOut() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...out, enabled: [...enabled] })); } catch { /* ignore */ }
 }
@@ -88,7 +96,7 @@ function saveOut() {
 const freshEdit = () => ({
   rot: 0, flipH: false, flipV: false, straighten: 0,
   crop: { x: 0, y: 0, w: 1, h: 1 },
-  aspect: 'free', // 'free' | 'orig' | number (w/h in pixels)
+  aspect: pageConfig.aspect ?? 'free', // 'free' | 'orig' | number (w/h in pixels)
   adj: { ...DEFAULT_ADJ },
 });
 let edit = freshEdit();
@@ -778,6 +786,7 @@ async function loadFile(file) {
   src.preview = s < 1 ? resample(bmp, 0, 0, bmp.width, bmp.height, bmp.width * s, bmp.height * s) : bmp;
 
   edit = freshEdit();
+  applyAspect(); // landing pages may start with a locked ratio
   results.clear();
   pixelsChanged();
   fullEdited = null;
@@ -1082,6 +1091,23 @@ function bindControls() {
     onViewportsChanged();
   });
 
+  // Guide: a slide-over drawer on desktop, inline content on small screens.
+  const guide = $('#guide');
+  const drawerMode = () => matchMedia('(min-width: 1001px) and (min-height: 601px)').matches;
+  const setGuide = open => {
+    guide.classList.toggle('open', open);
+    $('#guide-toggle').setAttribute('aria-expanded', String(open));
+    if (open) $('#guide-close').focus();
+  };
+  $('#guide-toggle').addEventListener('click', e => {
+    if (!drawerMode()) return; // plain anchor link scrolls to the guide
+    e.preventDefault();
+    setGuide(!guide.classList.contains('open'));
+  });
+  $('#guide-close').addEventListener('click', () => { setGuide(false); $('#guide-toggle').focus(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && guide.classList.contains('open')) setGuide(false); });
+  if (location.hash === '#guide' && drawerMode()) setGuide(true);
+
   $('#download-all').addEventListener('click', downloadAll);
   $('#lb-close').addEventListener('click', () => $('#lightbox').close());
   $('#lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') e.target.close(); });
@@ -1111,6 +1137,7 @@ async function init() {
   syncOutControls();
   bindControls();
   bindCrop();
+  if (pageConfig.tab) $(`[data-tab="${pageConfig.tab}"]`)?.click();
 }
 
 init();
